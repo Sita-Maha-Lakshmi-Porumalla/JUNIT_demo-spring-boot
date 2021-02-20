@@ -11,7 +11,21 @@ spring:
   h2:
     console:
       enabled: true
+  activemq:
+    broker-url: tcp://localhost:61616
 
+# File Properties
 app:
   source: C:/Training/input?fileName=Test_Camel.txt
   destination: C:/Training/output/
+  messageSource: C:/Training/input?fileName=JMSMessage.txt
+  messageDestination: C:/Training/output/
+
+# JMS Properties
+camel:
+  component:
+    activemq:
+      broker-url: tcp://localhost:61616
+
+
+

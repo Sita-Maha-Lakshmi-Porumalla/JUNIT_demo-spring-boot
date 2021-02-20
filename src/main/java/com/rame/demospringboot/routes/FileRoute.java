@@ -1,6 +1,7 @@
 package com.rame.demospringboot.routes;
 
 import com.rame.demospringboot.processor.MyProcessor;
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,18 @@ public class FileRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        fileCopier();
+      // fileCopier();
+        renameFile();
+    }
+
+        /* File Name Manipulation */
+    private void renameFile() {
+        from("file:" + sourceLocation)
+                .routeId("Rename-File-Route")
+                .log(LoggingLevel.INFO, "Incoming File: ${file:name}")
+                .setHeader(Exchange.FILE_NAME, simple("${file:name.noext}_${date:now:yyyyMMdd}.${file:name.ext}"))
+                .log(LoggingLevel.INFO, "Renamed File: ${file:name}")
+                .to("file:" + destination);
     }
 
     private void fileCopier() {
