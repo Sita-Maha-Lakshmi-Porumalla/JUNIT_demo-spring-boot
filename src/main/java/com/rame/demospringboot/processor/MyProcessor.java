@@ -15,6 +15,7 @@ public class MyProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+
         String messageBody = exchange.getIn().getBody(String.class);
         Map<String, Object> exchangeProperties = exchange.getProperties();
 
